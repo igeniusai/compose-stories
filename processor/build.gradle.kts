@@ -1,9 +1,12 @@
 import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("java-library")
     id("kotlin-kapt")
+    alias(libs.plugins.shadow)
     alias(libs.plugins.org.jetbrains.kotlin.jvm)
 }
 
@@ -17,4 +20,8 @@ dependencies {
     implementation(libs.kotlin.poet)
     implementation(libs.auto.service)
     kapt(libs.auto.service)
+}
+
+tasks.withType<ShadowJar> {
+    archiveFileName.set("processor.jar")
 }
