@@ -28,6 +28,7 @@ fun TreeNodeList(
     state: TreeNodeListState = rememberTreeNodeListState(),
     title: String?,
     root: FolderNode,
+    closeDrawer: () -> Unit
 ) {
     val nodeItems = root.children.map { state.current.value.getNodeItemStates(it) }.flatten()
     ModalDrawerSheet {
@@ -46,6 +47,7 @@ fun TreeNodeList(
                 NodeItem(
                     model = it,
                     onClick = {
+                        if(it.node is StoryNode) closeDrawer()
                         state.current.value = state.current.value.toggleNode(it.node)
                     }
                 )

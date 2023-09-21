@@ -1,7 +1,5 @@
 package ai.igenius.composestories.processor.specs
 
-import ai.igenius.composestories.processor.model.AnnotatedStory
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KModifier
@@ -60,8 +58,3 @@ private fun getRootPackage(packages: List<String>): String {
 
     return checkNotNull(result) { "no root package name" }
 }
-
-private const val MODELS_PACKAGE = "ai.igenius.composestories.storiesui.models"
-val STORIES_PROVIDER_INTERFACE = ClassName(MODELS_PACKAGE, "StoriesProvider")
-val COMPOSE_NODE_MODEL = ClassName(MODELS_PACKAGE, "ComposeNode")
-val COMPOSABLE_ANNOTATION = ClassName("androidx.compose.runtime", "Composable")

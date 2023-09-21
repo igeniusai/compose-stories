@@ -14,7 +14,6 @@ import javax.annotation.processing.SupportedOptions
 import javax.annotation.processing.SupportedSourceVersion
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
-import javax.tools.Diagnostic
 
 @SupportedAnnotationTypes("ai.igenius.composestories.Story")
 @SupportedOptions(StoryProcessor.KAPT_KOTLIN_GENERATED_OPTION_NAME)
@@ -24,13 +23,11 @@ class StoryProcessor : AbstractProcessor() {
 
     override fun process(set: Set<TypeElement?>?, roundEnvironment: RoundEnvironment?): Boolean {
 
-        processingEnv.messager.printMessage(Diagnostic.Kind.NOTE, "ZOID StoryProcessor running!!!!!!!!!!!!!")
         val generatedSourcesRoot = File(processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME].orEmpty())
 
         val elements = roundEnvironment?.getElementsAnnotatedWith(Story::class.java)
 
         val stories = elements?.map {AnnotatedStory(processingEnv, it) }
-
 
         if (roundEnvironment?.processingOver() != true)
             stories?.let { generateProvider(generatedSourcesRoot, it) }

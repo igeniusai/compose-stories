@@ -1,8 +1,6 @@
 package ai.igenius.composestories.storiesui
 
-import ai.igenius.composestories.storiesui.models.ComposeNode
 import ai.igenius.composestories.storiesui.models.StoriesProvider
-import ai.igenius.composestories.storiesui.models.StoryNode
 import ai.igenius.composestories.storiesui.models.generateFolderTree
 import ai.igenius.composestories.storiesui.utils.WindowType
 import ai.igenius.composestories.storiesui.utils.rememberWindowType
@@ -20,9 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 @Composable
 fun StoriesScreen(
@@ -32,14 +32,19 @@ fun StoriesScreen(
     val treeState = rememberTreeNodeListState()
     val drawerState = rememberDrawerState(DrawerValue.Open)
     val tree by remember { derivedStateOf { generateFolderTree(provider.stories) } }
-    val selectedStory = provider.stories.find { it.id == treeState.current.value.selectedNodeId } as? ComposeNode
+    val selectedStory = provider.stories.find { it.id == treeState.current.value.selectedNodeId }
+    val scope = rememberCoroutineScope()
 
     DynamicNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
                 Spacer(Modifier.height(12.dp))
-                TreeNodeList(treeState, title, tree)
+                TreeNodeList(treeState, title, tree) {
+                    scope.launch {
+                        drawerState.close()
+                    }
+                }
             }
         },
         content = {

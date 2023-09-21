@@ -9,7 +9,9 @@ import ai.igenius.composestories.storiesui.StoriesScreen
 import ai.igenius.composestories.storiesui.models.ComposeNode
 import ai.igenius.composestories.storiesui.models.StoriesProvider
 import ai.igenius.composestories.storiesui.models.StoryNode
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -25,9 +27,20 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Story("Ciao/come/stai")
+@Story("Buttons/Primary")
 @Preview
 @Composable
-fun ExampleComponentStory() {
-    Text("Ciao bello")
+fun PrimaryButton() {
+    Button(onClick = {}) {
+        Text("Primary Button")
+    }
+}
+
+@Story("Buttons/Text")
+@Preview
+@Composable
+fun TextButton() {
+    TextButton(onClick = {}) {
+        Text("Text Button")
+    }
 }
