@@ -1,9 +1,7 @@
 package ai.igenius.composestories
 
-@Target(AnnotationTarget.FIELD)
+@Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
 annotation class Story(
-    val title: String = "",
-    val description: String = "",
-    val variants: Array<String> = ["Default"]
+    val path: String = "",
 )

@@ -1,6 +1,7 @@
 package ai.igenius.composestories.storiesui
 
 import ai.igenius.composestories.storiesui.models.ComposeNode
+import ai.igenius.composestories.storiesui.models.StoriesProvider
 import ai.igenius.composestories.storiesui.models.StoryNode
 import ai.igenius.composestories.storiesui.models.generateFolderTree
 import ai.igenius.composestories.storiesui.utils.WindowType
@@ -26,12 +27,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun StoriesScreen(
     title: String? = null,
-    stories: List<StoryNode>
+    provider: StoriesProvider
 ) {
     val treeState = rememberTreeNodeListState()
     val drawerState = rememberDrawerState(DrawerValue.Open)
-    val tree by remember { derivedStateOf { generateFolderTree(stories) } }
-    val selectedStory = stories.find { it.id == treeState.current.value.selectedNodeId } as? ComposeNode
+    val tree by remember { derivedStateOf { generateFolderTree(provider.stories) } }
+    val selectedStory = provider.stories.find { it.id == treeState.current.value.selectedNodeId } as? ComposeNode
 
     DynamicNavigationDrawer(
         drawerState = drawerState,
