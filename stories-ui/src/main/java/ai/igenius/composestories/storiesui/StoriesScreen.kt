@@ -13,6 +13,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.PermanentNavigationDrawer
+import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -35,28 +36,30 @@ fun StoriesScreen(
     val selectedStory = provider.stories.find { it.id == treeState.current.value.selectedNodeId }
     val scope = rememberCoroutineScope()
 
-    DynamicNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                Spacer(Modifier.height(12.dp))
-                TreeNodeList(treeState, title, tree) {
-                    scope.launch {
-                        drawerState.close()
+    Surface {
+        DynamicNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheet {
+                    Spacer(Modifier.height(12.dp))
+                    TreeNodeList(treeState, title, tree) {
+                        scope.launch {
+                            drawerState.close()
+                        }
                     }
                 }
+            },
+            content = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    selectedStory?.compose()
+                }
             }
-        },
-        content = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                selectedStory?.compose()
-            }
-        }
-    )
+        )
+    }
 }
 
 @Composable

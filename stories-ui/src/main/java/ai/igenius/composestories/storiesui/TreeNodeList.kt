@@ -3,8 +3,7 @@ package ai.igenius.composestories.storiesui
 import ai.igenius.composestories.storiesui.models.FolderNode
 import ai.igenius.composestories.storiesui.models.StoryNode
 import ai.igenius.composestories.storiesui.models.TreeNode
-import android.os.Parcelable
-import android.util.Log
+import ai.igenius.composestories.storiesui.models.TreeNodeListValue
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,9 +18,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import kotlinx.parcelize.Parcelize
 
 @Composable
 fun TreeNodeList(
@@ -78,12 +75,6 @@ class TreeNodeListState(
             )
     }
 }
-
-@Parcelize
-data class TreeNodeListValue(
-    val selectedNodeId: Int?,
-    val openedFolders: List<String>,
-) : Parcelable
 
 private fun TreeNodeListValue.getNodeItemStates(tree: TreeNode, rootDistance: Int = 0): List<NodeItemModel> =
     when (tree) {
