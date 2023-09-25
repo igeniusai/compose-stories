@@ -27,7 +27,7 @@ interface TreeNode {
     }
 }
 
-fun generateFolderTree(stories: List<StoryNode>) =
+internal fun generateFolderTree(stories: List<StoryNode>) =
     FolderNode().also { root ->
         stories.forEach { generateCompletePath(root, it) }
     }

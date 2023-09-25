@@ -7,7 +7,7 @@ import ai.igenius.composestories.storiesui.models.TreeNode.Companion.DIVIDER
  * @param completePath is the path including the folder name,
  *          The defaul value is the root path
  */
-class FolderNode(
+internal class FolderNode(
     override val completePath: String = ROOT_FOLDER
 ) : TreeNode {
 

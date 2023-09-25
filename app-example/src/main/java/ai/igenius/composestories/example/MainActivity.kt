@@ -6,13 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import ai.igenius.composestories.example.ui.theme.ComposeStoriesTheme
 import ai.igenius.composestories.storiesui.StoriesScreen
+import ai.igenius.composestories.storiesui.components.NightModeToggleState
 import ai.igenius.composestories.storiesui.models.ComposeNode
 import ai.igenius.composestories.storiesui.models.StoriesProvider
 import ai.igenius.composestories.storiesui.models.StoryNode
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
@@ -20,8 +26,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeStoriesTheme {
-                StoriesScreen("Stories Example app", appStoriesProvider)
+            val isDark = isSystemInDarkTheme()
+            var isDarkTheme by remember { mutableStateOf(isDark) }
+
+            ComposeStoriesTheme(isDarkTheme) {
+                StoriesScreen(
+                    title = "Stories Example app",
+                    storiesProvider = appStoriesProvider,
+                    nightModeToggleState = NightModeToggleState(isDarkTheme) { isDarkTheme = it }
+                )
             }
         }
     }

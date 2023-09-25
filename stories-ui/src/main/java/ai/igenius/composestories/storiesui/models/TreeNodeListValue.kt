@@ -3,7 +3,7 @@ package ai.igenius.composestories.storiesui.models
 import android.os.Parcel
 import android.os.Parcelable
 
-data class TreeNodeListValue(
+internal data class TreeNodeListValue(
     val selectedNodeId: Int?,
     val openedFolders: List<String>,
 ) : Parcelable {

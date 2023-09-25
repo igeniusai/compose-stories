@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 
 
 @Composable
-fun rememberWindowType(): WindowType {
+internal fun rememberWindowType(): WindowType {
     val configuration = LocalConfiguration.current
     return when {
         configuration.screenWidthDp < 600 -> WindowType.Compact
@@ -14,7 +14,7 @@ fun rememberWindowType(): WindowType {
     }
 }
 
-sealed class WindowType {
+internal sealed class WindowType {
     object Compact : WindowType()
     object Medium : WindowType()
     object Expanded : WindowType()
