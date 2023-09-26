@@ -8,6 +8,7 @@ import ai.igenius.composestories.storiesui.models.StoriesProvider
 import ai.igenius.composestories.storiesui.models.generateFolderTree
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalDrawerSheet
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun StoriesScreen(
-    title: String? = null,
+    title: @Composable RowScope.() -> Unit,
     storiesProvider: StoriesProvider,
     nightModeToggleState: NightModeToggleState? = null
 ) {

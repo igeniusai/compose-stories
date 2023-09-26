@@ -12,7 +12,7 @@ true // Needed to make the Suppress annotation work for the plugins block
 val githubProperties = java.util.Properties()
 githubProperties.load(java.io.FileInputStream(rootProject.file("github.properties"))) //Set env variable GPR_USER & GPR_API_KEY if not adding a properties file
 
-val libraryVersion = "0.1.2"
+val libraryVersion = "0.1.3"
 val githubGroupId = "ai.igenius.composestories"
 
 val coreId = "core"
