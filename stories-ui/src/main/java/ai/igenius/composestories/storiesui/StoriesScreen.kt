@@ -33,7 +33,8 @@ fun StoriesScreen(
     val treeState = rememberTreeNodeListState()
     val drawerState = rememberDrawerState(DrawerValue.Open)
     val tree by remember { derivedStateOf { generateFolderTree(storiesProvider.stories) } }
-    val selectedStory = storiesProvider.stories.find { it.id == treeState.current.value.selectedNodeId }
+    val selectedStory = storiesProvider.stories
+        .find { it.id == treeState.current.value.selectedNodeId }
     val scope = rememberCoroutineScope()
 
     Surface {

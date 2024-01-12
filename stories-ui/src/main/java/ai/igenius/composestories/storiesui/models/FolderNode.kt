@@ -3,9 +3,9 @@ package ai.igenius.composestories.storiesui.models
 import ai.igenius.composestories.storiesui.models.TreeNode.Companion.DIVIDER
 
 /**
- * Class to define a gorup of stories
- * @param completePath is the path including the folder name,
- *          The defaul value is the root path
+ * Class to define a group of stories.
+ * @param completePath is the path including the folder name.
+ * The default value is the root path.
  */
 internal class FolderNode(
     override val completePath: String = ROOT_FOLDER
