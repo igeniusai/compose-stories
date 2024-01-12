@@ -22,7 +22,7 @@ The usage of AndroidStories is based on the creation of a dedicated app-module w
 To start writing stories you need first to add GitHub Packages in your settings.gradle.kts file at
 the end of repositories with your GitHub credentials:
 
-```
+```kotlin
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -44,7 +44,7 @@ add to the example app build.gradle.kts file:
 
 1) kapt plugin to generate the stories provider
 
-```
+```kotlin
 plugins {
     ...
     id("kotlin-kapt")
@@ -53,7 +53,7 @@ plugins {
 
 2) Compose Stories dependencies
 
-```
+```kotlin
 dependencies {
     ...
     implementation("ai.igenius.composestories:core:0.1.4")
@@ -66,7 +66,7 @@ dependencies {
 To run the stories we need to provide the generated `appStoriesProvider` object to a `StoriesScreen`,
 to do that you need to make the project and use `StoriesScreen` in an composable like so:
 
-```
+```kotlin
 import ai.igenius.composestories.storiesui.StoriesScreen
 import ai.igenius.composestories.storiesui.components.NightModeToggleState
 import your.package.stories.appStoriesProvider
@@ -93,6 +93,29 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+    }
+}
+```
+
+# How to use
+To declare a story we have to annotate with `@Story` a composable function
+
+```kotlin
+@Story("Buttons/Primary")
+@Preview
+@Composable
+fun PrimaryButtonShowcase() {
+    Button(onClick = {}) {
+        Text("Primary Button")
+    }
+}
+
+@Story("Buttons/Text")
+@Preview
+@Composable
+fun TextButtonShowcase() {
+    TextButton(onClick = {}) {
+        Text("Text Button")
     }
 }
 ```

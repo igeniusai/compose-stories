@@ -1,12 +1,12 @@
 package ai.igenius.composestories.example
 
 import ai.igenius.composestories.Story
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import ai.igenius.composestories.example.ui.theme.ComposeStoriesTheme
 import ai.igenius.composestories.storiesui.StoriesScreen
 import ai.igenius.composestories.storiesui.components.NightModeToggleState
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
 @Story("Buttons/Primary")
 @Preview
 @Composable
-fun PrimaryButton() {
+fun PrimaryButtonShowcase() {
     Button(onClick = {}) {
         Text("Primary Button")
     }
@@ -81,7 +81,7 @@ fun PrimaryButton() {
 @Story("Buttons/Text")
 @Preview
 @Composable
-fun TextButton() {
+fun TextButtonShowcase() {
     TextButton(onClick = {}) {
         Text("Text Button")
     }
