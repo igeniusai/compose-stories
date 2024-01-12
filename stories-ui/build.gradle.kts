@@ -28,7 +28,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -40,9 +40,10 @@ android {
 }
 
 dependencies {
-
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
+    implementation(libs.activity.compose)
+    implementation(platform(libs.compose.bom))
     implementation(libs.androidx.compose.material3)
 
     testImplementation(libs.junit)
