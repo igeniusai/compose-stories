@@ -21,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -28,10 +30,17 @@ import kotlinx.coroutines.launch
 fun StoriesScreen(
     title: @Composable RowScope.() -> Unit,
     storiesProvider: StoriesProvider,
-    nightModeToggleState: NightModeToggleState? = null
+    nightModeToggleState: NightModeToggleState? = null,
+    viewModel: StoriesScreenViewModel = viewModel()
 ) {
-    val treeState = rememberTreeNodeListState()
-    val drawerState = rememberDrawerState(DrawerValue.Open)
+    val lastNodeId by viewModel.lastNodeId.collectAsStateWithLifecycle()
+
+    val treeState = rememberTreeNodeListState(
+        nodeId = lastNodeId,
+        onValueChange = { viewModel.saveLastStoryId(it.selectedNodeId) }
+    )
+    val drawerState =
+        rememberDrawerState(if (lastNodeId != null) DrawerValue.Closed else DrawerValue.Open)
     val tree by remember { derivedStateOf { generateFolderTree(storiesProvider.stories) } }
     val selectedStory = storiesProvider.stories
         .find { it.id == treeState.current.value.selectedNodeId }
@@ -42,7 +51,12 @@ fun StoriesScreen(
             drawerState = drawerState,
             drawerContent = {
                 ModalDrawerSheet {
-                    TreeNodeList(treeState, nightModeToggleState, title, tree) {
+                    TreeNodeList(
+                        state = treeState,
+                        nightModeToggleState = nightModeToggleState,
+                        title = title,
+                        root = tree
+                    ) {
                         scope.launch {
                             drawerState.close()
                         }

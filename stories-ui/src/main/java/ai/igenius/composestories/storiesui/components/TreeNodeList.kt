@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -20,7 +21,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun TreeNodeList(
-    state: TreeNodeListState = rememberTreeNodeListState(),
+    state: TreeNodeListState,
     nightModeToggleState: NightModeToggleState? = null,
     title: @Composable RowScope.() -> Unit,
     root: FolderNode,
@@ -44,7 +45,7 @@ internal fun TreeNodeList(
                     model = it,
                     onClick = {
                         if (it.node is StoryNode) closeDrawer()
-                        state.current.value = state.current.value.toggleNode(it.node)
+                        state.setCurrent(state.current.value.toggleNode(it.node))
                     }
                 )
             }
@@ -54,23 +55,40 @@ internal fun TreeNodeList(
 
 @Composable
 internal fun rememberTreeNodeListState(
-    initialValue: TreeNodeListValue = TreeNodeListValue(null, emptyList())
+    nodeId: Int?,
+    onValueChange: (value: TreeNodeListValue) -> Unit,
+) = rememberTreeNodeListState(
+    initialValue = TreeNodeListValue(nodeId, emptyList()),
+    onValueChange = onValueChange,
+)
+
+@Composable
+internal fun rememberTreeNodeListState(
+    initialValue: TreeNodeListValue = TreeNodeListValue(null, emptyList()),
+    onValueChange: (value: TreeNodeListValue) -> Unit,
 ): TreeNodeListState {
-    return rememberSaveable(saver = TreeNodeListState.Saver()) {
-        TreeNodeListState(initialValue)
+    return rememberSaveable(saver = TreeNodeListState.Saver(onValueChange)) {
+        TreeNodeListState(initialValue, onValueChange)
     }
 }
 
 internal class TreeNodeListState(
-    initialValue: TreeNodeListValue
+    initialValue: TreeNodeListValue,
+    private val onValueChange: (value: TreeNodeListValue) -> Unit,
 ) {
-    val current = mutableStateOf(initialValue)
+    private val _current = mutableStateOf(initialValue)
+    val current: State<TreeNodeListValue> = _current
+
+    fun setCurrent(value: TreeNodeListValue) {
+        _current.value = value
+        onValueChange(_current.value)
+    }
 
     companion object {
-        fun Saver() =
+        fun Saver(onValueChange: (value: TreeNodeListValue) -> Unit) =
             Saver<TreeNodeListState, TreeNodeListValue>(
-                save = { it.current.value },
-                restore = { TreeNodeListState(it) }
+                save = { it._current.value },
+                restore = { TreeNodeListState(it, onValueChange) }
             )
     }
 }

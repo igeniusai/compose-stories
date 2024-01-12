@@ -45,6 +45,8 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.lifecycle.viewModelCompose)
 
     testImplementation(libs.junit)
 
