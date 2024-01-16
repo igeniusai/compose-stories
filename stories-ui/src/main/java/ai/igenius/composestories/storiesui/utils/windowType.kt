@@ -3,7 +3,6 @@ package ai.igenius.composestories.storiesui.utils
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 
-
 @Composable
 internal fun rememberWindowType(): WindowType {
     val configuration = LocalConfiguration.current
@@ -15,7 +14,7 @@ internal fun rememberWindowType(): WindowType {
 }
 
 internal sealed class WindowType {
-    object Compact : WindowType()
-    object Medium : WindowType()
-    object Expanded : WindowType()
+    data object Compact : WindowType()
+    data object Medium : WindowType()
+    data object Expanded : WindowType()
 }
